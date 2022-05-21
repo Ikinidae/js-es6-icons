@@ -113,38 +113,50 @@ const icons = [
 	}
 ];
 
-console.log(icons);
-
 // bisogna creare un div da inserire nel container per ogni icona
 // al suo interno bisogna inserire l'icona e un h3 per il nome
 
 const container = document.querySelector(".icons_container");
-console.log(container);
+container.classList.add("flex_container");
+const selectElement = document.getElementById("icon_type");
 
-// let divIcon = document.createElement("div");
-// container.append(divIcon);
-// let icon = document.createElement("i");
-// icon.classList.add("fas", "fa-cat");
-// divIcon.append(icon);
-// let iconTag = document.createElement("h3");
-// divIcon.append(iconTag);
-// let iconText = document.createTextNode(icons[0].name);
-// iconTag.append(iconText);
+selectElement.addEventListener('change', selectArray);
 
+stampArray(icons);
 
-for (let i=0; i < icons.length; i++) {
-	let divIcon = document.createElement("div");
-	container.append(divIcon);
+function stampArray (array) {
+	array.forEach(element => {
+		const divIcon = document.createElement("div");
+		divIcon.classList.add("icon_card", "flex_card");
+		container.append(divIcon);
 
-	let icon = document.createElement("i");
-	icon.classList.add(icons[i].family, icons[i].prefix + icons[i].name);
-	divIcon.append(icon);
+		const icon = document.createElement("i");
+		icon.classList.add(element.family, element.prefix + element.name, element.color);
+		divIcon.append(icon);
 
-	let iconTag = document.createElement("h3");
-	divIcon.append(iconTag);
-	let iconText = document.createTextNode(icons[i].name);
-	iconTag.append(iconText);
-}
+		const iconTag = document.createElement("h3");
+		divIcon.append(iconTag);
+		const iconText = document.createTextNode(element.name);
+		iconTag.append(iconText);
+	});
+};
 
-// console.log(container);
-
+// cambiare le icone visualizzate in base al filtro select
+function selectArray () {
+	switch(selectElement.value) {
+		case "animal":
+			const animalArray = icons.filter((element) => element.type === "animal");
+			stampArray(animalArray);
+			break;
+		case "vegetable":
+			const vegArray = icons.filter((element) => element.type === "vegetable");
+			stampArray(vegArray);
+			break;
+		case "user":
+			const userArray = icons.filter((element) => element.type === "user");
+			stampArray(userArray);
+			break;
+		default:
+			stampArray(icons);
+	};
+};
