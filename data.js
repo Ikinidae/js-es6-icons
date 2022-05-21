@@ -125,6 +125,7 @@ selectElement.addEventListener('change', selectArray);
 stampArray(icons);
 
 function stampArray (array) {
+	container.innerHTML = "";
 	array.forEach(element => {
 		const divIcon = document.createElement("div");
 		divIcon.classList.add("icon_card", "flex_card");
